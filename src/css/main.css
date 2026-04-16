@@ -1,44 +1,25 @@
-/* Global reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import "tailwindcss";
+
+@theme {
+  --color-brand-900: #2e073f;
+  --color-brand-700: #7a1cac;
+  --color-brand-600: #5c3e94;
+  --color-brand-500: #ad49e1;
+  --color-brand-400: #816797;
+
+  --color-surface-900: #262626;
+  --color-surface-200: #e8e6de;
+  --color-surface-100: #f7f7f7;
 }
 
-html,
-body,
-#app {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
+@layer base {
+  html,
+  body,
+  #app {
+    @apply m-0 min-h-screen w-full p-0;
+  }
 
-body {
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-img,
-svg,
-video,
-canvas {
-  display: block;
-  max-width: 100%;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-ul,
-ol {
-  list-style: none;
+  body {
+    @apply overflow-x-hidden bg-surface-100 text-surface-900 antialiased;
+  }
 }

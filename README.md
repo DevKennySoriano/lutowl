@@ -4,7 +4,7 @@
 
 Lutowl is a modern recipe-sharing platform focused on Filipino cuisine. It helps users discover practical meal ideas quickly based on ingredients, budget, or simple meal prompts.
 
-The project is built with Vue 3 and Vite, using a modular CSS architecture for clean and maintainable styling.
+The project is built with Vue 3 and Vite, styled with Tailwind CSS for a clean and scalable UI workflow.
 
 ## About Lutowl
 
@@ -13,15 +13,6 @@ Lutowl works by helping you find meals based on what you need at the moment. You
 After that, Lutowl gives you a list of food options you can choose from. Each suggestion includes the meal name and simple details so you can quickly decide what to cook without overthinking. You can also save recipes you like or try a different suggestion if you want more options.
 
 In short, Lutowl turns your inputs into quick meal ideas. Instead of spending time thinking "what should I cook?", it gives you instant answers that match your situation.
-
-## Current Features
-
-- Responsive landing homepage (desktop, tablet, mobile)
-- Sticky navigation with branded logo and CTA
-- Filipino-inspired purple design system
-- Modular CSS structure with separated style layers
-- Lucide icon integration for clean UI iconography
-- Branded metadata title and favicon
 
 ## Project Structure
 
@@ -42,25 +33,17 @@ src/
 ├── components/
 ├── composables/
 ├── css/
-│   ├── main.css
-│   └── homepage/
-│       ├── base.css
-│       ├── footer.css
-│       ├── index.css
-│       ├── navigation.css
-│       ├── responsive.css
-│       ├── sections.css
-│       └── variables.css
+│   └── main.css
 ├── stores/
 ├── utils/
 ├── views/
 │   └── Homepage.vue
 ├── App.vue
-├── main.js
-└── style.css
+└── main.js
 
 index.html
 package.json
+package-lock.json
 vite.config.js
 README.md
 ```
@@ -96,22 +79,19 @@ npm run preview  # preview production build locally
 
 - Vue 3 (Composition API)
 - Vite
+- Tailwind CSS v4
+- @tailwindcss/vite
 - Lucide Vue Next
-- CSS3 (modular architecture)
+- HTML + JavaScript (ES modules)
 
 ## Styling Approach
 
-Lutowl uses layered and separated CSS for maintainability:
+Lutowl uses Tailwind CSS utilities with centralized theme tokens:
 
-- Global reset and app-level defaults in `src/css/main.css`
-- Homepage style entrypoint in `src/css/homepage/index.css`
-- Section-specific styling split into dedicated files:
-	- `variables.css`
-	- `base.css`
-	- `navigation.css`
-	- `sections.css`
-	- `footer.css`
-	- `responsive.css`
+- Tailwind setup and global base styles are in `src/css/main.css`
+- Theme color tokens are defined using `@theme`
+- Component UI is styled directly in Vue templates using Tailwind utility classes
+- Vite integrates Tailwind through `@tailwindcss/vite` in `vite.config.js`
 
 ## Roadmap
 
@@ -120,6 +100,13 @@ Lutowl uses layered and separated CSS for maintainability:
 - Add save/bookmark flow
 - Add smart input filters (ingredients, budget, prep time)
 - Add backend/API integration for dynamic recipes
+
+## Contact and Social Links
+
+- LinkedIn: https://www.linkedin.com/in/kennysoriano/
+- GitHub: https://github.com/DevKennySoriano
+- Portfolio: https://devkennysoriano.vercel.app/
+- Email: devkennysoriano@gmail.com
 
 ## License
 
