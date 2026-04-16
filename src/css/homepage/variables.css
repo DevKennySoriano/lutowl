@@ -1,0 +1,23 @@
+:root {
+  --color-primary-900: #2e073f;
+  --color-primary-700: #7a1cac;
+  --color-primary-500: #ad49e1;
+  --color-primary-400: #816797;
+  --color-primary-600: #5c3e94;
+
+  --color-neutral-900: #262626;
+  --color-neutral-200: #e8e6de;
+  --color-neutral-100: #f7f7f7;
+
+  --color-text-main: var(--color-neutral-900);
+  --color-text-muted: #5f5f5f;
+  --color-text-on-brand: var(--color-neutral-100);
+
+  --shadow-soft: 0 8px 24px rgba(38, 38, 38, 0.12);
+  --shadow-subtle: 0 2px 10px rgba(38, 38, 38, 0.08);
+  --border-subtle: 1px solid rgba(38, 38, 38, 0.08);
+
+  --content-pad-desktop: 24px;
+  --content-pad-tablet: 20px;
+  --content-pad-mobile: 16px;
+}
