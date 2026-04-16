@@ -1,6 +1,8 @@
-# Lutowl - Think less. Eat better.
 
-![Lutowl Icon](src/assets/lutowl-icon-logo/lutowl-logo-light-purle.png)
+<div align="left" style="display: flex; align-items: center; gap: 12px;">
+	<img src="src/assets/lutowl-icon-logo/lutowl-logo-light-purle.png" alt="Lutowl Icon" width="48" height="48" style="vertical-align: middle; margin-right: 12px;"/>
+	<h1 style="display: inline; font-size: 2.2em; font-weight: bold; margin: 0;">Lutowl - Think less. Eat better.</h1>
+</div>
 
 ## Overview
 
@@ -112,4 +114,4 @@ Lutowl uses Tailwind CSS utilities with centralized theme tokens:
 
 ## License
 
-This project is currently for development and portfolio use.
+This project is currently in development.
