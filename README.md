@@ -1,5 +1,7 @@
 # Lutowl - Think less. Eat better.
 
+![Lutowl Icon](src/assets/lutowl-icon-logo/lutowl-logo-light-purle.png)
+
 ## Overview
 
 Lutowl is a modern recipe-sharing platform focused on Filipino cuisine. It helps users discover practical meal ideas quickly based on ingredients, budget, or simple meal prompts.
