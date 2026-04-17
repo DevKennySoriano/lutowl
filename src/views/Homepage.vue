@@ -1,34 +1,22 @@
+<script setup>
+import Navigation from '../components/Navigation.vue'
+import { BookOpen, Users, MapPin, Lightbulb } from 'lucide-vue-next'
+import navLogo from '../assets/lutowl-icon-logo/lutowl-logo-light-purle.png'
+import footerLogo from '../assets/lutowl-icon-logo/lutowl-logo-light-logo.png'
+</script>
+
 <template>
   <div class="min-h-screen w-full bg-surface-100 text-surface-900">
-    <nav class="sticky top-0 z-[100] w-full border-b border-[rgba(46,7,63,0.14)] bg-[rgba(247,247,247,0.96)] shadow-[0_8px_20px_rgba(38,38,38,0.06)] backdrop-blur-md">
-      <div class="flex w-full flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <div class="inline-flex items-center">
-          <img :src="navLogo" alt="Lutowl logo" class="block h-10 w-auto rounded-[10px] border border-[rgba(46,7,63,0.25)] bg-white shadow-[0_6px_14px_rgba(38,38,38,0.08)]" />
-        </div>
-        <ul class="order-3 mt-2 flex w-full flex-wrap items-center justify-center gap-6 border-t border-[rgba(46,7,63,0.12)] pt-3 text-center lg:order-none lg:mt-0 lg:w-auto lg:flex-1 lg:justify-start lg:border-t-0 lg:pt-0">
-          <li class="relative">
-            <a href="#home" class="border-b-2 border-transparent py-2 text-sm font-semibold text-brand-900 transition hover:border-brand-500 hover:text-brand-700">Home</a>
-          </li>
-          <li class="relative">
-            <a href="#about" class="border-b-2 border-transparent py-2 text-sm font-semibold text-brand-900 transition hover:border-brand-500 hover:text-brand-700">About</a>
-          </li>
-          <li class="relative">
-            <a href="#contact" class="border-b-2 border-transparent py-2 text-sm font-semibold text-brand-900 transition hover:border-brand-500 hover:text-brand-700">Contact</a>
-          </li>
-        </ul>
-        <button class="rounded-xl border border-brand-700 px-5 py-2.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-700 hover:text-surface-100">Discover</button>
-      </div>
-    </nav>
+    <Navigation />
 
-    <section id="home" class="flex min-h-[600px] w-full items-center justify-center bg-brand-900">
-      <div class="w-full px-4 text-center text-surface-100 sm:px-6 lg:px-8">
-        <div>
-          <h1 class="mb-5 text-4xl font-bold leading-tight md:text-6xl">Discover Filipino Cuisine</h1>
-          <p class="mx-auto mb-9 max-w-3xl text-base text-[rgba(247,247,247,0.92)] md:text-xl">Explore, share, and celebrate traditional recipes from the Philippines</p>
-          <div class="flex flex-wrap items-center justify-center gap-3.5">
-            <button class="rounded-xl bg-surface-100 px-7 py-3 text-base font-semibold text-brand-900 shadow-[0_2px_10px_rgba(38,38,38,0.08)] transition hover:bg-surface-200">Start Exploring</button>
-            <button class="rounded-xl border border-[rgba(247,247,247,0.8)] px-7 py-3 text-base font-semibold text-surface-100 transition hover:bg-[rgba(247,247,247,0.12)]">Share a Recipe</button>
-          </div>
+    <section id="home" class="relative w-full bg-brand-900 flex items-end justify-start min-h-[500px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px] lg:items-end lg:justify-start">
+      <div class="absolute inset-0 w-full h-full bg-brand-900"></div>
+      <div class="relative z-10 w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center min-h-[500px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px] py-12 lg:items-start lg:justify-end lg:text-left lg:max-w-2xl lg:pb-24 lg:pt-0">
+        <h1 class="mb-5 text-5xl font-bold leading-tight md:text-7xl text-white">Discover Filipino Cuisine</h1>
+        <p class="mb-9 max-w-2xl text-lg text-[rgba(247,247,247,0.92)] md:text-2xl">Explore, share, and celebrate traditional recipes from the Philippines</p>
+        <div class="flex flex-wrap items-center gap-3.5 justify-center lg:justify-start">
+          <button class="rounded-xl bg-surface-100 px-7 py-3 text-base font-semibold text-brand-900 shadow-[0_2px_10px_rgba(38,38,38,0.08)] transition hover:bg-surface-200">Start Exploring</button>
+          <button class="rounded-xl border border-[rgba(247,247,247,0.8)] px-7 py-3 text-base font-semibold text-surface-100 transition hover:bg-[rgba(247,247,247,0.12)]">Share a Recipe</button>
         </div>
       </div>
     </section>
@@ -70,8 +58,9 @@
       <div class="w-full px-4 sm:px-6 lg:px-8">
         <h2 class="mb-3 text-3xl font-bold text-surface-100 md:text-5xl">Ready to Explore Filipino Recipes?</h2>
         <p class="mb-7 text-base text-[rgba(247,247,247,0.9)] md:text-lg">Join our community of food lovers today</p>
-        <button class="rounded-xl bg-brand-700 px-8 py-3 text-base font-semibold text-surface-100 shadow-[0_2px_10px_rgba(38,38,38,0.08)] transition hover:bg-brand-600">Create Free Account</button>
+        <button class="get-started-btn px-8 py-3 text-base font-semibold text-white shadow-[0_2px_10px_rgba(38,38,38,0.08)] transition">Get Started</button>
       </div>
+
     </section>
 
     <footer id="contact" class="w-full bg-surface-900 px-0 pb-7 pt-14 text-surface-100">
@@ -113,8 +102,15 @@
   </div>
 </template>
 
-<script setup>
-import { BookOpen, Users, MapPin, Lightbulb } from 'lucide-vue-next'
-import navLogo from '../assets/lutowl-icon-logo/lutowl-logo-light-purle.png'
-import footerLogo from '../assets/lutowl-icon-logo/lutowl-logo-light-logo.png'
-</script>
+<style scoped>
+.get-started-btn {
+  border-radius: 0.75rem;
+  background: var(--color-brand-500);
+  transition: background 0.2s;
+}
+.get-started-btn:hover {
+  background: var(--color-brand-900);
+}
+</style>
+
+

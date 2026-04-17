@@ -1,0 +1,29 @@
+.main-nav {
+  background: #222;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+.main-nav ul {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.main-nav li {
+  display: inline-block;
+}
+.main-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+.main-nav a.router-link-exact-active {
+  color: #ff9800;
+}
+.main-nav a:hover {
+  color: #ffd54f;
+}
