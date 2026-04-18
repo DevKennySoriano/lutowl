@@ -15,13 +15,30 @@
       <div class="max-w-6xl w-full mx-auto bg-white md:rounded-2xl shadow-none md:shadow-[0_2px_12px_rgba(38,38,38,0.08)] mt-0 md:mt-12 mb-0 md:mb-20 flex flex-col h-[720px] overflow-hidden">
         <div class="flex flex-col md:flex-row w-full">
 
-          <div class="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 bg-surface-50 flex flex-row md:flex-col p-3 md:p-6 gap-2 overflow-x-auto md:overflow-visible">
+          <!-- Dropdown (mobile/tablet) -->
+          <div class="md:hidden p-4 border-b border-gray-200 bg-surface-50">
+            <select
+              v-model="activeTab"
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500"
+            >
+              <option
+                v-for="tab in tabs"
+                :key="tab.key"
+                :value="tab.key"
+              >
+                {{ tab.label }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Sidebar Tabs (desktop only) -->
+          <div class="hidden md:flex w-full md:w-1/3 border-r border-gray-200 bg-surface-50 flex-col p-6 gap-2">
             <button
               v-for="tab in tabs"
               :key="tab.key"
               @click="activeTab = tab.key"
               :class="[
-                'flex-shrink-0 md:w-full text-left px-4 py-2.5 md:py-3 rounded-lg text-sm font-semibold transition',
+                'text-left px-4 py-3 rounded-lg text-sm font-semibold transition',
                 activeTab === tab.key
                   ? 'bg-brand-500 text-white'
                   : 'text-gray-500 hover:bg-gray-100 hover:text-brand-700'
@@ -31,6 +48,7 @@
             </button>
           </div>
 
+          <!-- Content -->
           <div class="flex-1 overflow-y-auto px-4 md:px-12 py-6 md:py-10">
             <article class="space-y-5 md:space-y-6 text-[14px] md:text-[15px] leading-relaxed text-surface-900/90">
 
