@@ -19,7 +19,10 @@
           >Discover</router-link>
         </li>
         <li class="relative">
-          <a href="#about" class="border-b-2 border-transparent py-2 text-sm font-semibold text-brand-900 transition hover:border-brand-500 hover:text-brand-700">About</a>
+          <router-link to="/about"
+            class="border-b-2 border-transparent py-2 text-sm font-semibold text-brand-900 transition hover:border-brand-500 hover:text-brand-700"
+            active-class="nav-active"
+          >About</router-link>
         </li>
       </ul>
       <button class="rounded-xl border border-brand-700 px-5 py-2.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-700 hover:text-surface-100">Log In</button>

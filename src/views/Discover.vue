@@ -1,3 +1,48 @@
+<script setup>
+import { ref, computed } from 'vue'
+import Navigation from '../components/Navigation.vue'
+import Footer from '../components/Footer.vue'
+import logo from '../assets/lutowl-icon-logo/lutowl-logo-light-purle.png'
+
+const search = ref('')
+const sortBy = ref('newest')
+const openIngredients = ref(false)
+const selectedIngredients = ref([])
+
+const foods = ref([
+  { id: 1, title: 'Chicken Adobo', description: 'Soy-vinegar chicken with garlic.', date: '2026-04-10', rating: 4.9, ingredients: ['chicken','soy sauce','garlic','vinegar'] },
+  { id: 2, title: 'Sinigang na Hipon', description: 'Sour shrimp soup.', date: '2026-03-22', rating: 4.8, ingredients: ['shrimp','tamarind','tomato','vegetables'] },
+  { id: 3, title: 'Lechon Kawali', description: 'Crispy pork belly.', date: '2026-02-15', rating: 4.7, ingredients: ['pork','oil','garlic','salt'] },
+  { id: 4, title: 'Pancit Canton', description: 'Stir-fried noodles.', date: '2026-01-30', rating: 4.6, ingredients: ['noodles','soy sauce','vegetables','chicken'] }
+])
+
+const allIngredients = computed(() => {
+  const set = new Set()
+  foods.value.forEach(f => f.ingredients.forEach(i => set.add(i)))
+  return Array.from(set)
+})
+
+const formatDate = (date) => new Date(date).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
+
+const filteredFoods = computed(() => {
+  let result = foods.value.filter(food => {
+    const s = search.value.toLowerCase()
+    const matchesSearch = !s || food.title.toLowerCase().includes(s) || food.description.toLowerCase().includes(s)
+
+    const matchesIngredients = selectedIngredients.value.length === 0 ||
+      selectedIngredients.value.every(i => food.ingredients.includes(i))
+
+    return matchesSearch && matchesIngredients
+  })
+
+  if (sortBy.value === 'lowest') result = [...result].sort((a,b)=> a.rating-b.rating)
+  else if (sortBy.value === 'newest') result = [...result].sort((a,b)=> new Date(b.date)-new Date(a.date))
+  else if (sortBy.value === 'rating_desc') result = [...result].sort((a,b)=> b.rating-a.rating)
+  else if (sortBy.value === 'rating_asc') result = [...result].sort((a,b)=> a.rating-b.rating)
+
+  return result
+})
+</script>
 <template>
   <div class="min-h-screen bg-surface-100">
     <Navigation />
@@ -102,49 +147,6 @@
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
-import Navigation from '../components/Navigation.vue'
-import logo from '../assets/lutowl-icon-logo/lutowl-logo-light-purle.png'
-
-const search = ref('')
-const sortBy = ref('newest')
-const openIngredients = ref(false)
-const selectedIngredients = ref([])
-
-const foods = ref([
-  { id: 1, title: 'Chicken Adobo', description: 'Soy-vinegar chicken with garlic.', date: '2026-04-10', rating: 4.9, ingredients: ['chicken','soy sauce','garlic','vinegar'] },
-  { id: 2, title: 'Sinigang na Hipon', description: 'Sour shrimp soup.', date: '2026-03-22', rating: 4.8, ingredients: ['shrimp','tamarind','tomato','vegetables'] },
-  { id: 3, title: 'Lechon Kawali', description: 'Crispy pork belly.', date: '2026-02-15', rating: 4.7, ingredients: ['pork','oil','garlic','salt'] },
-  { id: 4, title: 'Pancit Canton', description: 'Stir-fried noodles.', date: '2026-01-30', rating: 4.6, ingredients: ['noodles','soy sauce','vegetables','chicken'] }
-])
-
-const allIngredients = computed(() => {
-  const set = new Set()
-  foods.value.forEach(f => f.ingredients.forEach(i => set.add(i)))
-  return Array.from(set)
-})
-
-const formatDate = (date) => new Date(date).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
-
-const filteredFoods = computed(() => {
-  let result = foods.value.filter(food => {
-    const s = search.value.toLowerCase()
-    const matchesSearch = !s || food.title.toLowerCase().includes(s) || food.description.toLowerCase().includes(s)
-
-    const matchesIngredients = selectedIngredients.value.length === 0 ||
-      selectedIngredients.value.every(i => food.ingredients.includes(i))
-
-    return matchesSearch && matchesIngredients
-  })
-
-  if (sortBy.value === 'lowest') result = [...result].sort((a,b)=> a.rating-b.rating)
-  else if (sortBy.value === 'newest') result = [...result].sort((a,b)=> new Date(b.date)-new Date(a.date))
-  else if (sortBy.value === 'rating_desc') result = [...result].sort((a,b)=> b.rating-a.rating)
-  else if (sortBy.value === 'rating_asc') result = [...result].sort((a,b)=> a.rating-b.rating)
-
-  return result
-})
-</script>
