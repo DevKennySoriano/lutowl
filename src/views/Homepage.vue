@@ -14,6 +14,7 @@ import Footer from '../components/Footer.vue'
         <img src="../assets/images/homepage/homepage-banner.jpg" alt="Background" class="w-full h-full object-cover object-center opacity-40" />
       </div>
       <div class="relative z-10 w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center min-h-[500px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px] py-12 lg:items-start lg:justify-end lg:text-left lg:max-w-2xl lg:pb-24 lg:pt-0">
+        <!-- Lutowl branding removed as per user request -->
         <h1 class="mb-5 text-5xl font-bold leading-tight md:text-7xl text-white">Discover Filipino Cuisine</h1>
         <p class="mb-9 max-w-2xl text-lg text-[rgba(247,247,247,0.92)] md:text-2xl">Explore, share, and celebrate traditional recipes from the Philippines</p>
         <div class="flex flex-wrap items-center gap-3.5 justify-center lg:justify-start">
