@@ -17,7 +17,7 @@ import Footer from '../components/Footer.vue'
         <h1 class="mb-5 text-5xl font-bold leading-tight md:text-7xl text-white">Discover Filipino Cuisine</h1>
         <p class="mb-9 max-w-2xl text-lg text-[rgba(247,247,247,0.92)] md:text-2xl">Explore, share, and celebrate traditional recipes from the Philippines</p>
         <div class="flex flex-wrap items-center gap-3.5 justify-center lg:justify-start">
-          <button class="rounded-xl bg-surface-100 px-7 py-3 text-base font-semibold text-brand-900 shadow-[0_2px_10px_rgba(38,38,38,0.08)] transition hover:bg-surface-200">Start Exploring</button>
+          <router-link to="/discover" class="rounded-xl bg-surface-100 px-7 py-3 text-base font-semibold text-brand-900 shadow-[0_2px_10px_rgba(38,38,38,0.08)] transition hover:bg-surface-200">Start Exploring</router-link>
           <button class="rounded-xl border border-[rgba(247,247,247,0.8)] px-7 py-3 text-base font-semibold text-surface-100 transition hover:bg-[rgba(247,247,247,0.12)]">Share a Recipe</button>
         </div>
       </div>

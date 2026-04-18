@@ -1,8 +1,14 @@
+Here’s your README in a **clean code block format (no formatting break, safe copy-paste)**:
 
+````md
 <div align="left" style="display: flex; align-items: center; gap: 12px;">
-	<img src="src/assets/lutowl-icon-logo/lutowl-logo-light-purle.png" alt="Lutowl Icon" width="48" height="48" style="vertical-align: middle; margin-right: 12px;"/>
-	<h1 style="display: inline; font-size: 2.2em; font-weight: bold; margin: 0;">Lutowl - Think less. Eat better.</h1>
+	<img src="src/assets/lutowl-icon-logo/lutowl-logo-light-purle.png" alt="Lutowl Icon" width="48" height="48" />
+	<h1 style="font-size: 2.2em; font-weight: bold; margin: 0;">
+		Lutowl - Think less. Eat better.
+	</h1>
 </div>
+
+---
 
 ## Overview
 
@@ -10,47 +16,53 @@ Lutowl is a modern recipe-sharing platform focused on Filipino cuisine. It helps
 
 The project is built with Vue 3 and Vite, styled with Tailwind CSS for a clean and scalable UI workflow.
 
+---
+
 ## About Lutowl
 
-Lutowl works by helping you find meals based on what you need at the moment. You can input what ingredients you have, choose your budget, or simply ask for a meal suggestion. The system then looks through available recipes and shows you the most suitable meal ideas.
+Lutowl is designed to simplify the process of deciding what to cook by turning simple inputs into meaningful meal suggestions. Users can explore ideas based on available ingredients, budget considerations, or general food preferences. The system provides relevant recipe options that help reduce time spent planning meals.
 
-After that, Lutowl gives you a list of food options you can choose from. Each suggestion includes the meal name and simple details so you can quickly decide what to cook without overthinking. You can also save recipes you like or try a different suggestion if you want more options.
+Each suggestion is presented in a clear and accessible format, allowing users to evaluate options, save ideas, or explore alternatives. The platform is designed to support both everyday cooking and discovering new dishes in a simple and structured way.
 
-In short, Lutowl turns your inputs into quick meal ideas. Instead of spending time thinking "what should I cook?", it gives you instant answers that match your situation.
+---
 
-## Project Structure
+## Project Progress Timeline
 
-```text
-public/
-├── favicon.svg
-├── icons.svg
-└── lutowl-favicon.png
+### Phase 1: Interface Development (Current)
 
-src/
-├── assets/
-│   ├── css/
-│   ├── images/
-│   └── lutowl-icon-logo/
-│       ├── lutowl-logo-dark.png
-│       ├── lutowl-logo-light-logo.png
-│       └── lutowl-logo-light-purle.png
-├── components/
-├── composables/
-├── css/
-│   └── main.css
-├── stores/
-├── utils/
-├── views/
-│   └── Homepage.vue
-├── App.vue
-└── main.js
+This phase focuses on establishing the foundational structure of the platform. It includes defining layout systems, ensuring responsiveness across devices, and setting the initial design direction. It also establishes consistency in visual elements and basic navigation flow.
 
-index.html
-package.json
-package-lock.json
-vite.config.js
-README.md
-```
+---
+
+### Phase 2: Application Expansion
+
+This phase introduces additional interface sections and interaction flows that extend the usability of the platform. It focuses on improving content organization and how users navigate through different parts of the system.
+
+---
+
+### Phase 3: System Integration
+
+This phase transitions the project toward dynamic functionality by introducing structured data handling and system communication layers. It prepares the foundation for user interaction handling and persistent data flow.
+
+---
+
+### Phase 4: Feature Enhancement
+
+This phase focuses on improving system behavior and expanding interaction capabilities. It enhances how content is discovered and how the platform adapts to user input and context.
+
+---
+
+### Phase 5: Deployment and Optimization
+
+This phase prepares the application for production use by focusing on stability, performance, and deployment readiness. It ensures the system is optimized for real-world usage and structured for scalability.
+
+---
+
+## Future Use and Expansion
+
+The project is intended to evolve into a broader ecosystem that may include advanced personalization systems, expanded content discovery mechanisms, and additional platform versions such as mobile applications. It also has potential for community-driven features and improved recommendation systems over time.
+
+---
 
 ## Installation and Setup
 
@@ -62,56 +74,55 @@ README.md
 ### Run Locally
 
 ```bash
-# install dependencies
 npm install
-
-# run development server
 npm run dev
-```
+````
 
-The app runs at http://localhost:5173 by default.
+The application runs at:
+[http://localhost:5173](http://localhost:5173)
+
+````
+
+---
 
 ### Available Scripts
 
 ```bash
-npm run dev      # start local development server
-npm run build    # create production build in dist/
+npm run dev      # start development server
+npm run build    # create production build
 npm run preview  # preview production build locally
-```
+````
+
+---
 
 ## Technology Stack
 
-- Vue 3 (Composition API)
-- Vite
-- Tailwind CSS v4
-- @tailwindcss/vite
-- Lucide Vue Next
-- HTML + JavaScript (ES modules)
+* Vue 3 (Composition API)
+* Vite
+* Tailwind CSS v4
+* @tailwindcss/vite
+* Lucide Vue Next
+* JavaScript (ES Modules)
+
+---
 
 ## Styling Approach
 
-Lutowl uses Tailwind CSS utilities with centralized theme tokens:
+The project uses a utility-first styling approach with Tailwind CSS. Styling is applied directly within components to maintain consistency, scalability, and a clean development workflow.
 
-- Tailwind setup and global base styles are in `src/css/main.css`
-- Theme color tokens are defined using `@theme`
-- Component UI is styled directly in Vue templates using Tailwind utility classes
-- Vite integrates Tailwind through `@tailwindcss/vite` in `vite.config.js`
-
-## Roadmap
-
-- Add dedicated Discover page for meal browsing
-- Add recipe details page
-- Add save/bookmark flow
-- Add smart input filters (ingredients, budget, prep time)
-- Add backend/API integration for dynamic recipes
+---
 
 ## Contact and Social Links
 
-- LinkedIn: https://www.linkedin.com/in/kennysoriano/
-- GitHub: https://github.com/DevKennySoriano
-- Portfolio: https://devkennysoriano.vercel.app/
-- Email: devkennysoriano@gmail.com
+* LinkedIn: [https://www.linkedin.com/in/kennysoriano/](https://www.linkedin.com/in/kennysoriano/)
+* GitHub: [https://github.com/DevKennySoriano](https://github.com/DevKennySoriano)
+* Portfolio: [https://devkennysoriano.vercel.app/](https://devkennysoriano.vercel.app/)
+* Email: [devkennysoriano@gmail.com](mailto:devkennysoriano@gmail.com)
+
+---
 
 ## License
 
-This project is currently in development.
+This project is currently in active development and not yet licensed for production use.
+
+```
