@@ -78,7 +78,12 @@
         </div>
 
       </div>
-        <ul class="mt-3 flex w-full items-center justify-center gap-6">
+
+      <!-- NAV LINKS -->
+      <ul
+        class="mt-3 flex w-full items-center justify-center gap-6
+               lg:mt-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2"
+      >
         <li>
           <router-link to="/" class="nav-link" active-class="nav-active">
             Home
@@ -96,9 +101,6 @@
             About
           </router-link>
         </li>
-
-       
-
       </ul>
 
     </div>
@@ -107,6 +109,7 @@
 </template>
 
 <script setup>
+import '../css/navigation.css'
 import { ref, onMounted } from 'vue'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'vue-router'
@@ -180,51 +183,3 @@ const logout = async () => {
   router.push('/login')
 }
 </script>
-
-<style scoped>
-.nav-link {
-  border-bottom: 2px solid transparent;
-  padding: 0.5rem 0;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #2e073f;
-  transition: 0.2s;
-}
-
-.nav-link:hover {
-  border-color: #7c3aed;
-  color: #6d28d9;
-}
-
-.nav-active {
-  border-color: #7c3aed !important;
-  color: #7c3aed !important;
-}
-
-.auth-btn {
-  border-radius: 12px;
-  background: #6d28d9;
-  padding: 0.5rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: white;
-}
-
-.auth-btn:hover {
-  background: #2e073f;
-}
-
-.auth-btn-outline {
-  border-radius: 12px;
-  border: 1px solid #6d28d9;
-  padding: 0.5rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #6d28d9;
-}
-
-.auth-btn-outline:hover {
-  background: #6d28d9;
-  color: white;
-}
-</style>
