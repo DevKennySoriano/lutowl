@@ -22,7 +22,7 @@ const logout = async () => {
 
   if (!confirm.isConfirmed) return
 
-  // 1. Supabase logout (works for BOTH google + email)
+
   const { error } = await supabase.auth.signOut()
 
   if (error) {
@@ -30,7 +30,7 @@ const logout = async () => {
     return
   }
 
-  // 2. HARD CLEAN session (fix stubborn Google session persistence)
+
   await supabase.auth.setSession({
     access_token: null,
     refresh_token: null
@@ -39,7 +39,7 @@ const logout = async () => {
   localStorage.removeItem('sb-auth-token')
   localStorage.removeItem('supabase.auth.token')
 
-  // 3. UI feedback
+
   await Swal.fire({
     icon: 'success',
     title: 'Logged out',
@@ -48,7 +48,7 @@ const logout = async () => {
     width: 420
   })
 
-  // 4. Force redirect + reload (important for Google sessions)
+
   window.location.href = '/login'
 }
 </script>
