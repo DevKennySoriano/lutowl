@@ -15,6 +15,10 @@
           </div>
 
           <p class="text-sm text-gray-500">
+            Create your account to continue.
+          </p>
+
+          <p class="text-xs text-gray-400">
             Already have an account?
             <router-link to="/login" class="text-brand-900 underline ml-1 font-medium">
               Log in
@@ -22,16 +26,13 @@
           </p>
         </div>
 
-        <!-- GOOGLE SIGNUP -->
+        <!-- GOOGLE -->
         <button
           @click="signUpWithGoogle"
           class="w-full flex items-center justify-center gap-2 border border-gray-200 bg-white py-2.5 rounded-md text-sm font-medium hover:bg-gray-50 transition"
         >
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            class="w-5 h-5"
-          />
-          Sign up with Google
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" />
+          Continue with Google
         </button>
 
         <!-- DIVIDER -->
@@ -44,34 +45,36 @@
         <!-- FORM -->
         <form class="w-full flex flex-col gap-4" @submit.prevent="handleSignup">
 
-          <!-- USERNAME -->
+          <!-- NAME -->
           <div>
-            <label class="text-sm text-gray-500 font-medium">Username</label>
-
-            <div class="relative">
-              <User class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" :size="16" />
-              <input v-model="name" type="text" placeholder="Your Name"
-                class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
-            </div>
+            <label class="label">Username</label>
+            <input
+              v-model="name"
+              type="text"
+              placeholder="Enter your username"
+              class="input"
+            />
+            <p v-if="errors.name" class="error">{{ errors.name }}</p>
           </div>
 
           <!-- EMAIL -->
           <div>
-            <label class="text-sm text-gray-500 font-medium">Email</label>
-
-            <div class="relative">
-              <Mail class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" :size="16" />
-              <input v-model="email" type="email" placeholder="you@email.com"
-                class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
-            </div>
+            <label class="label">Email</label>
+            <input
+              v-model="email"
+              type="email"
+              placeholder="example@email.com"
+              class="input"
+            />
+            <p v-if="errors.email" class="error">{{ errors.email }}</p>
           </div>
 
           <!-- PHONE -->
           <div>
-            <label class="text-sm text-gray-500 font-medium">Phone (Philippines)</label>
+            <label class="label">Phone</label>
 
             <div class="flex items-center gap-2">
-              <span class="flex items-center gap-1 px-3 py-2 bg-gray-100 rounded-md border text-sm">
+              <span class="flex items-center gap-1 px-3 py-2 bg-gray-100 border rounded-md text-sm">
                 <img
                   src="../assets/images/homepage/jp-draws-Philippines-Flag.svg"
                   class="w-5 h-5"
@@ -79,43 +82,61 @@
                 +63
               </span>
 
-              <input v-model="phone" type="text" maxlength="10"
+              <input
+                v-model="phone"
+                type="text"
+                maxlength="10"
                 placeholder="9123456789"
                 @input="phone = phone.replace(/\D/g, '')"
-                class="flex-1 px-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
+                class="input flex-1"
+              />
             </div>
+
+            <p v-if="errors.phone" class="error">{{ errors.phone }}</p>
           </div>
 
           <!-- PASSWORD -->
           <div>
-            <label class="text-sm text-gray-500 font-medium">Password</label>
+            <label class="label">Password</label>
+            <input
+              v-model="password"
+              type="password"
+              placeholder="Enter a strong password"
+              class="input"
+            />
 
-            <div class="relative">
-              <Lock class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" :size="16" />
-              <input v-model="password" type="password"
-                class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
+            <!-- PASSWORD CHECKLIST -->
+            <div class="mt-2 text-xs space-y-1">
+              <p :class="checkClass(password.length >= 8)">• At least 8 characters</p>
+              <p :class="checkClass(hasUppercase)">• One uppercase letter</p>
+              <p :class="checkClass(hasNumber)">• One number</p>
+              <p :class="checkClass(hasSymbol)">• One special character</p>
             </div>
+
+            <p v-if="errors.password" class="error">{{ errors.password }}</p>
           </div>
 
           <!-- CONFIRM -->
           <div>
-            <label class="text-sm text-gray-500 font-medium">Confirm Password</label>
-
-            <div class="relative">
-              <Lock class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" :size="16" />
-              <input v-model="confirmPassword" type="password"
-                class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
-            </div>
+            <label class="label">Confirm Password</label>
+            <input
+              v-model="confirmPassword"
+              type="password"
+              placeholder="Re-enter password"
+              class="input"
+            />
+            <p v-if="errors.confirmPassword" class="error">
+              {{ errors.confirmPassword }}
+            </p>
           </div>
 
           <!-- BUTTON -->
           <button
-            :disabled="!isValid || loading"
+            :disabled="loading || hasErrors"
             class="bg-brand-900 text-white py-2.5 rounded-md font-semibold
-                   hover:bg-brand-800 active:scale-95 transition
-                   disabled:opacity-50 disabled:cursor-not-allowed"
+                   hover:bg-brand-800 transition disabled:opacity-50"
           >
-            {{ loading ? 'Creating account...' : 'Sign Up' }}
+            {{ loading ? 'Creating account...' : 'Create Account' }}
           </button>
 
         </form>
@@ -127,12 +148,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import Navigation from '../components/Navigation.vue'
 import Footer from '../components/Footer.vue'
 import { supabase } from '../lib/supabase'
 import Swal from 'sweetalert2'
-import { UserPlus, User, Mail, Lock } from 'lucide-vue-next'
+import { UserPlus } from 'lucide-vue-next'
 
 const name = ref('')
 const email = ref('')
@@ -141,17 +162,57 @@ const password = ref('')
 const confirmPassword = ref('')
 const loading = ref(false)
 
-/* VALIDATION */
-const isValid = computed(() =>
-  name.value &&
-  email.value &&
-  phone.value &&
-  password.value.length >= 8 &&
-  password.value === confirmPassword.value
-)
+const errors = ref({})
 
-/* SIGNUP EMAIL */
+/* PASSWORD RULES */
+const hasUppercase = computed(() => /[A-Z]/.test(password.value))
+const hasNumber = computed(() => /[0-9]/.test(password.value))
+const hasSymbol = computed(() => /[^A-Za-z0-9]/.test(password.value))
+
+/* REAL-TIME VALIDATION */
+watch([name, email, phone, password, confirmPassword], () => {
+  validate()
+})
+
+const validate = () => {
+  const newErrors = {}
+
+  if (!name.value) newErrors.name = 'Username is required'
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email.value))
+    newErrors.email = 'Enter a valid email address'
+
+  if (phone.value.length !== 10)
+    newErrors.phone = 'Enter a valid 10-digit number'
+
+  if (
+    password.value.length < 8 ||
+    !hasUppercase.value ||
+    !hasNumber.value ||
+    !hasSymbol.value
+  ) {
+    newErrors.password = 'Password does not meet requirements'
+  }
+
+  if (confirmPassword.value !== password.value)
+    newErrors.confirmPassword = 'Passwords do not match'
+
+  errors.value = newErrors
+}
+
+/* COMPUTED */
+const hasErrors = computed(() => Object.keys(errors.value).length > 0)
+
+/* STYLE HELPER */
+const checkClass = (valid) =>
+  valid ? 'text-green-600' : 'text-gray-400'
+
+/* SIGNUP */
 const handleSignup = async () => {
+  validate()
+  if (hasErrors.value) return
+
   loading.value = true
 
   const { data, error } = await supabase.auth.signUp({
@@ -161,8 +222,7 @@ const handleSignup = async () => {
 
   if (error) {
     loading.value = false
-    Swal.fire('Error', error.message, 'error')
-    return
+    return Swal.fire('Error', error.message, 'error')
   }
 
   await supabase.from('accounts_profile').insert({
@@ -172,10 +232,16 @@ const handleSignup = async () => {
   })
 
   loading.value = false
-  Swal.fire('Success', 'Account created', 'success')
+
+  Swal.fire({
+    icon: 'success',
+    title: 'Account created',
+    text: 'Your account has been successfully registered.',
+    confirmButtonColor: '#1f2937'
+  })
 }
 
-/* GOOGLE SIGNUP */
+/* GOOGLE */
 const signUpWithGoogle = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -184,8 +250,35 @@ const signUpWithGoogle = async () => {
     }
   })
 
-  if (error) {
-    Swal.fire('Error', error.message, 'error')
-  }
+  if (error) Swal.fire('Error', error.message, 'error')
 }
 </script>
+
+<style scoped>
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  background: #f9fafb;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #6d28d9;
+  background: white;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.error {
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 4px;
+}
+</style>

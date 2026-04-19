@@ -3,10 +3,10 @@
 
     <div class="px-4 py-3 sm:px-6 lg:px-8">
 
-      <!-- TOP ROW: LOGO + AUTH -->
-      <div class="flex w-full items-center justify-between">
 
-        <!-- LOGO -->
+      <div class="flex flex-wrap items-center justify-between gap-y-3">
+
+>
         <div class="flex items-center gap-3">
           <img
             :src="navLogo"
@@ -18,10 +18,34 @@
           </span>
         </div>
 
-        <!-- AUTH -->
+  
+        <ul
+          class="order-3 w-full flex justify-center gap-6 mt-2
+                 lg:order-none lg:w-auto lg:mt-0 lg:flex-1"
+        >
+          <li>
+            <router-link to="/" class="nav-link" active-class="nav-active">
+              Home
+            </router-link>
+          </li>
+
+          <li>
+            <router-link to="/discover" class="nav-link" active-class="nav-active">
+              Discover
+            </router-link>
+          </li>
+
+          <li>
+            <router-link to="/about" class="nav-link" active-class="nav-active">
+              About
+            </router-link>
+          </li>
+        </ul>
+
+
         <div class="flex items-center gap-3 relative">
 
-          <!-- NOT LOGGED IN -->
+  
           <div v-if="!user" class="flex gap-2">
             <router-link to="/login" class="auth-btn-outline">
               Log In
@@ -32,9 +56,10 @@
             </router-link>
           </div>
 
-          <!-- LOGGED IN -->
+
           <div v-else class="relative">
 
+  
             <button @click="toggleMenu" class="flex items-center gap-2">
               <img v-if="avatar" :src="avatar" class="w-9 h-9 rounded-full border" />
 
@@ -51,7 +76,6 @@
               v-if="menuOpen"
               class="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-lg border py-2"
             >
-
               <div class="px-3 py-2 text-xs text-gray-500 border-b">
                 {{ userEmail }}
               </div>
@@ -70,7 +94,6 @@
               >
                 Logout
               </button>
-
             </div>
 
           </div>
@@ -78,38 +101,12 @@
         </div>
 
       </div>
-
-      <!-- NAV LINKS -->
-      <ul
-        class="mt-3 flex w-full items-center justify-center gap-6
-               lg:mt-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-1/2 lg:-translate-y-1/2"
-      >
-        <li>
-          <router-link to="/" class="nav-link" active-class="nav-active">
-            Home
-          </router-link>
-        </li>
-
-        <li>
-          <router-link to="/discover" class="nav-link" active-class="nav-active">
-            Discover
-          </router-link>
-        </li>
-
-        <li>
-          <router-link to="/about" class="nav-link" active-class="nav-active">
-            About
-          </router-link>
-        </li>
-      </ul>
-
     </div>
 
   </nav>
 </template>
 
 <script setup>
-import '../css/navigation.css'
 import { ref, onMounted } from 'vue'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'vue-router'
@@ -127,7 +124,7 @@ const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
 }
 
-/* SESSION */
+
 onMounted(async () => {
   const { data } = await supabase.auth.getUser()
 
@@ -152,7 +149,7 @@ onMounted(async () => {
   })
 })
 
-/* LOGOUT */
+
 const logout = async () => {
   const result = await Swal.fire({
     title: 'Logout?',
@@ -183,3 +180,51 @@ const logout = async () => {
   router.push('/login')
 }
 </script>
+
+<style scoped>
+.nav-link {
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2e073f;
+  transition: 0.2s;
+}
+
+.nav-link:hover {
+  border-color: #7c3aed;
+  color: #6d28d9;
+}
+
+.nav-active {
+  border-color: #7c3aed !important;
+  color: #7c3aed !important;
+}
+
+.auth-btn {
+  border-radius: 12px;
+  background: #6d28d9;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+}
+
+.auth-btn:hover {
+  background: #2e073f;
+}
+
+.auth-btn-outline {
+  border-radius: 12px;
+  border: 1px solid #6d28d9;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6d28d9;
+}
+
+.auth-btn-outline:hover {
+  background: #6d28d9;
+  color: white;
+}
+</style>
