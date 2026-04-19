@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-surface-100 flex flex-col">
     <Navigation />
 
-    <div class="flex-1 flex items-center justify-center px-4 py-8">
+    <div class="flex-1 flex items-center justify-center px-4 py-10">
       <div class="w-full max-w-md bg-white rounded-2xl shadow px-6 py-10 flex flex-col items-center">
 
         <!-- HEADER -->
@@ -22,6 +22,25 @@
           </p>
         </div>
 
+        <!-- GOOGLE SIGNUP -->
+        <button
+          @click="signUpWithGoogle"
+          class="w-full flex items-center justify-center gap-2 border border-gray-200 bg-white py-2.5 rounded-md text-sm font-medium hover:bg-gray-50 transition"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            class="w-5 h-5"
+          />
+          Sign up with Google
+        </button>
+
+        <!-- DIVIDER -->
+        <div class="w-full flex items-center gap-3 my-6">
+          <div class="flex-1 h-px bg-gray-200"></div>
+          <span class="text-xs text-gray-400">or</span>
+          <div class="flex-1 h-px bg-gray-200"></div>
+        </div>
+
         <!-- FORM -->
         <form class="w-full flex flex-col gap-4" @submit.prevent="handleSignup">
 
@@ -34,10 +53,6 @@
               <input v-model="name" type="text" placeholder="Your Name"
                 class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
             </div>
-
-            <p v-if="name" :class="nameValid ? ok : bad">
-              {{ nameValid ? 'Great name, looks valid' : 'Must be 1–50 characters only' }}
-            </p>
           </div>
 
           <!-- EMAIL -->
@@ -49,10 +64,6 @@
               <input v-model="email" type="email" placeholder="you@email.com"
                 class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
             </div>
-
-            <p v-if="email" :class="emailValid ? ok : bad">
-              {{ emailValid ? 'Email format valid' : 'Enter a valid email address' }}
-            </p>
           </div>
 
           <!-- PHONE -->
@@ -73,10 +84,6 @@
                 @input="phone = phone.replace(/\D/g, '')"
                 class="flex-1 px-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
             </div>
-
-            <p v-if="phone" :class="phoneValid ? ok : bad">
-              {{ phoneValid ? 'Valid PH number' : 'Must start with 9 and be 10 digits' }}
-            </p>
           </div>
 
           <!-- PASSWORD -->
@@ -88,16 +95,9 @@
               <input v-model="password" type="password"
                 class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
             </div>
-
-            <div v-if="password" class="text-xs mt-1 space-y-1">
-              <p :class="rule(password.length >= 8)">• 8+ characters</p>
-              <p :class="rule(/[A-Z]/.test(password))">• uppercase letter</p>
-              <p :class="rule(/[0-9]/.test(password))">• number</p>
-              <p :class="rule(/[^A-Za-z0-9]/.test(password))">• symbol</p>
-            </div>
           </div>
 
-          <!-- CONFIRM PASSWORD -->
+          <!-- CONFIRM -->
           <div>
             <label class="text-sm text-gray-500 font-medium">Confirm Password</label>
 
@@ -106,16 +106,7 @@
               <input v-model="confirmPassword" type="password"
                 class="w-full pl-9 pr-3 py-2 rounded-md border bg-gray-50 text-sm focus:outline-none focus:border-brand-700 focus:bg-white transition" />
             </div>
-
-            <p v-if="confirmPassword" :class="passwordMatch ? ok : bad">
-              {{ passwordMatch ? 'Passwords match' : 'Passwords do not match' }}
-            </p>
           </div>
-
-          <!-- TERMS -->
-          <p class="text-xs text-gray-500 text-center mt-2">
-            By registering, you agree to our Terms and Conditions and Privacy Policy.
-          </p>
 
           <!-- BUTTON -->
           <button
@@ -151,61 +142,17 @@ const confirmPassword = ref('')
 const loading = ref(false)
 
 /* VALIDATION */
-const nameValid = computed(() =>
-  name.value.length > 0 && name.value.length <= 50
-)
-
-const emailValid = computed(() =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
-)
-
-const phoneValid = computed(() =>
-  /^9\d{9}$/.test(phone.value)
-)
-
-const passwordMatch = computed(() =>
+const isValid = computed(() =>
+  name.value &&
+  email.value &&
+  phone.value &&
+  password.value.length >= 8 &&
   password.value === confirmPassword.value
 )
 
-const isValid = computed(() =>
-  nameValid.value &&
-  emailValid.value &&
-  phoneValid.value &&
-  password.value.length >= 8 &&
-  passwordMatch.value
-)
-
-const rule = (c) => c ? 'text-green-600' : 'text-gray-400'
-const ok = 'text-green-600 text-xs'
-const bad = 'text-red-500 text-xs'
-
-/* SIGNUP */
+/* SIGNUP EMAIL */
 const handleSignup = async () => {
-
-  const confirm = await Swal.fire({
-    title: 'Create your account?',
-    text: 'Your profile will be created in Lutowl.',
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, Create Account',
-    cancelButtonText: 'Cancel',
-    reverseButtons: true,
-    confirmButtonColor: '#1f2937',
-    width: 420
-  })
-
-  if (!confirm.isConfirmed) return
-
   loading.value = true
-
-  Swal.fire({
-    title: 'Creating account...',
-    text: 'Please wait while we set up your profile.',
-    allowOutsideClick: false,
-    showConfirmButton: false,
-    width: 420,
-    didOpen: () => Swal.showLoading()
-  })
 
   const { data, error } = await supabase.auth.signUp({
     email: email.value,
@@ -214,14 +161,7 @@ const handleSignup = async () => {
 
   if (error) {
     loading.value = false
-
-    Swal.fire({
-      icon: 'error',
-      title: 'Signup failed',
-      text: error.message,
-      confirmButtonColor: '#1f2937',
-      width: 420
-    })
+    Swal.fire('Error', error.message, 'error')
     return
   }
 
@@ -232,29 +172,20 @@ const handleSignup = async () => {
   })
 
   loading.value = false
+  Swal.fire('Success', 'Account created', 'success')
+}
 
-  Swal.fire({
-    icon: 'success',
-    title: 'Account created',
-    text: 'You can now log in to your account.',
-    confirmButtonColor: '#1f2937',
-    width: 420
+/* GOOGLE SIGNUP */
+const signUpWithGoogle = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin
+    }
   })
+
+  if (error) {
+    Swal.fire('Error', error.message, 'error')
+  }
 }
 </script>
-
-<style scoped>
-.input {
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  background: #f9fafb;
-  font-size: 14px;
-}
-.input:focus {
-  outline: none;
-  border-color: #1f2937;
-  background: #fff;
-}
-</style>
