@@ -6,7 +6,6 @@
 
       <div class="flex flex-wrap items-center justify-between gap-y-3">
 
->
         <div class="flex items-center gap-3">
           <img
             :src="navLogo"

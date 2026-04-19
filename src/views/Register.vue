@@ -2,14 +2,14 @@
   <div class="min-h-screen bg-surface-100 flex flex-col">
     <Navigation />
 
-    <div class="flex-1 flex items-center justify-center px-4 py-10">
-      <div class="w-full max-w-md bg-white rounded-2xl shadow px-6 py-10 flex flex-col items-center">
+    <div class="flex-1 flex items-center justify-center px-4 py-6">
+      <div class="w-full max-w-lg bg-white rounded-2xl shadow px-6 py-6 flex flex-col items-center">
 
         <!-- HEADER -->
-        <div class="flex flex-col items-center gap-2 mb-6 text-center">
+        <div class="flex flex-col items-center gap-2 mb-4 text-center">
           <div class="flex items-center gap-2">
-            <UserPlus class="text-brand-700" :size="26" />
-            <h1 class="text-2xl font-bold text-brand-900">
+            <UserPlus class="text-brand-700" :size="24" />
+            <h1 class="text-xl font-bold text-brand-900">
               Create your account
             </h1>
           </div>
@@ -29,43 +29,33 @@
         <!-- GOOGLE -->
         <button
           @click="signUpWithGoogle"
-          class="w-full flex items-center justify-center gap-2 border border-gray-200 bg-white py-2.5 rounded-md text-sm font-medium hover:bg-gray-50 transition"
+          class="w-full flex items-center justify-center gap-2 border border-gray-200 bg-white py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition"
         >
           <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" />
           Continue with Google
         </button>
 
         <!-- DIVIDER -->
-        <div class="w-full flex items-center gap-3 my-6">
+        <div class="w-full flex items-center gap-3 my-4">
           <div class="flex-1 h-px bg-gray-200"></div>
           <span class="text-xs text-gray-400">or</span>
           <div class="flex-1 h-px bg-gray-200"></div>
         </div>
 
         <!-- FORM -->
-        <form class="w-full flex flex-col gap-4" @submit.prevent="handleSignup">
+        <form class="w-full flex flex-col gap-3" @submit.prevent="handleSignup">
 
           <!-- NAME -->
           <div>
             <label class="label">Username</label>
-            <input
-              v-model="name"
-              type="text"
-              placeholder="Enter your username"
-              class="input"
-            />
+            <input v-model="name" type="text" placeholder="Enter your username" class="input" />
             <p v-if="errors.name" class="error">{{ errors.name }}</p>
           </div>
 
           <!-- EMAIL -->
           <div>
             <label class="label">Email</label>
-            <input
-              v-model="email"
-              type="email"
-              placeholder="example@email.com"
-              class="input"
-            />
+            <input v-model="email" type="email" placeholder="example@email.com" class="input" />
             <p v-if="errors.email" class="error">{{ errors.email }}</p>
           </div>
 
@@ -106,7 +96,7 @@
             />
 
             <!-- PASSWORD CHECKLIST -->
-            <div class="mt-2 text-xs space-y-1">
+            <div v-if="password.length > 0" class="mt-1 text-xs space-y-1">
               <p :class="checkClass(password.length >= 8)">• At least 8 characters</p>
               <p :class="checkClass(hasUppercase)">• One uppercase letter</p>
               <p :class="checkClass(hasNumber)">• One number</p>
@@ -131,13 +121,15 @@
           </div>
 
           <!-- BUTTON -->
-          <button
-            :disabled="loading || hasErrors"
-            class="bg-brand-900 text-white py-2.5 rounded-md font-semibold
-                   hover:bg-brand-800 transition disabled:opacity-50"
-          >
-            {{ loading ? 'Creating account...' : 'Create Account' }}
-          </button>
+              <button
+          :disabled="loading || !isFormValid"
+          class="bg-brand-900 text-white py-2 rounded-md font-semibold
+                hover:bg-brand-800 transition
+                disabled:opacity-50 disabled:cursor-not-allowed
+                disabled:hover:bg-brand-900"
+        >
+          {{ loading ? 'Creating account...' : 'Create Account' }}
+        </button>
 
         </form>
       </div>
@@ -164,51 +156,73 @@ const loading = ref(false)
 
 const errors = ref({})
 
-/* PASSWORD RULES */
 const hasUppercase = computed(() => /[A-Z]/.test(password.value))
 const hasNumber = computed(() => /[0-9]/.test(password.value))
 const hasSymbol = computed(() => /[^A-Za-z0-9]/.test(password.value))
 
-/* REAL-TIME VALIDATION */
 watch([name, email, phone, password, confirmPassword], () => {
   validate()
 })
-
 const validate = () => {
   const newErrors = {}
 
-  if (!name.value) newErrors.name = 'Username is required'
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email.value))
-    newErrors.email = 'Enter a valid email address'
-
-  if (phone.value.length !== 10)
-    newErrors.phone = 'Enter a valid 10-digit number'
-
-  if (
-    password.value.length < 8 ||
-    !hasUppercase.value ||
-    !hasNumber.value ||
-    !hasSymbol.value
-  ) {
-    newErrors.password = 'Password does not meet requirements'
+  // USERNAME (only validate if user typed something)
+  if (name.value && !name.value.trim()) {
+    newErrors.name = 'Username is required'
   }
 
-  if (confirmPassword.value !== password.value)
-    newErrors.confirmPassword = 'Passwords do not match'
+  // EMAIL
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (email.value && !emailRegex.test(email.value)) {
+    newErrors.email = 'Enter a valid email address'
+  }
+
+  // PHONE
+  if (phone.value && phone.value.length !== 10) {
+    newErrors.phone = 'Enter a valid 10-digit number'
+  }
+
+  // PASSWORD
+  if (password.value) {
+    if (
+      password.value.length < 8 ||
+      !hasUppercase.value ||
+      !hasNumber.value ||
+      !hasSymbol.value
+    ) {
+      newErrors.password = 'Password does not meet requirements'
+    }
+  }
+
+  // CONFIRM PASSWORD
+  if (confirmPassword.value) {
+    if (confirmPassword.value !== password.value) {
+      newErrors.confirmPassword = 'Passwords do not match'
+    }
+  }
 
   errors.value = newErrors
 }
+const isFormValid = computed(() => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-/* COMPUTED */
+  return (
+    name.value &&
+    emailRegex.test(email.value) &&
+    phone.value.length === 10 &&
+    password.value.length >= 8 &&
+    hasUppercase.value &&
+    hasNumber.value &&
+    hasSymbol.value &&
+    confirmPassword.value === password.value
+  )
+})
+
 const hasErrors = computed(() => Object.keys(errors.value).length > 0)
 
-/* STYLE HELPER */
 const checkClass = (valid) =>
   valid ? 'text-green-600' : 'text-gray-400'
 
-/* SIGNUP */
 const handleSignup = async () => {
   validate()
   if (hasErrors.value) return
@@ -241,7 +255,6 @@ const handleSignup = async () => {
   })
 }
 
-/* GOOGLE */
 const signUpWithGoogle = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
@@ -257,10 +270,10 @@ const signUpWithGoogle = async () => {
 <style scoped>
 .input {
   width: 100%;
-  padding: 0.5rem 0.75rem;
+  padding: 0.45rem 0.7rem;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   background: #f9fafb;
 }
 
@@ -271,14 +284,14 @@ const signUpWithGoogle = async () => {
 }
 
 .label {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: #4b5563;
   font-weight: 500;
 }
 
 .error {
-  font-size: 12px;
+  font-size: 11px;
   color: #dc2626;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 </style>
