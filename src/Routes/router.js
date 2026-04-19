@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Homepage from '../views/homepage.vue'
-import Discover from '../views/discover.vue'
+import Homepage from '../views/Homepage.vue'
+import Discover from '../views/Discover.vue'
 import About from '../views/about.vue'
 import Register from '../views/register.vue'
 
