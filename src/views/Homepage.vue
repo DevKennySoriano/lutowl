@@ -69,7 +69,6 @@ import Footer from '../components/Footer.vue'
     <Footer />
   </div>
 </template>
-
 <style scoped>
 .get-started-btn {
   border-radius: 0.75rem;
