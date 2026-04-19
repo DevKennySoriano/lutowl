@@ -28,7 +28,7 @@
       </ul>
       <div class="flex gap-2">
         <button class="rounded-xl border border-brand-700 px-5 py-2.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-700 hover:text-surface-100">Log In</button>
-        <button class="rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-surface-100 transition hover:bg-brand-900">Register</button>
+        <router-link to="/register" class="rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-surface-100 transition hover:bg-brand-900">Register</router-link>
       </div>
     </div>
   </nav>
