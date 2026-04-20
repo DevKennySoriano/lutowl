@@ -28,4 +28,4 @@ In short, Lutowl turns your inputs into quick meal ideas. Instead of spending ti
 
 ## Note
 
-This project is currently in development.
+	This project is currently in development.
