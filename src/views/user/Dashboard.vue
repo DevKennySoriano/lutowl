@@ -12,28 +12,35 @@ import {
   Heart,
   Settings,
   LogOut,
-  User
+  User,
+  Plus,
+  Search,
+  TrendingUp,
+  Eye,
+  MessageCircle,
+  Activity,
+  ChefHat,
+  Star,
+  Upload,
+  Flame
 } from 'lucide-vue-next'
 
 const router = useRouter()
 
 const user = ref(null)
 const loading = ref(true)
-
 const activeTab = ref('overview')
 
-/* UI STATE */
 const mobileMenuOpen = ref(false)
 const showProfileMenu = ref(false)
 
-/* FETCH USER */
+/* USER */
 const fetchUser = async () => {
   const { data } = await supabase.auth.getUser()
   user.value = data.user
   loading.value = false
 }
 
-/* PROFILE */
 const displayName = computed(() =>
   user.value?.user_metadata?.full_name || user.value?.email
 )
@@ -47,24 +54,36 @@ const verified = computed(() =>
   user.value?.email_confirmed_at ? 'Verified' : 'Not Verified'
 )
 
-/* TABS */
+/* NAV */
 const tabs = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
   { id: 'recipes', label: 'My Recipes', icon: BookOpen },
   { id: 'favorites', label: 'Favorites', icon: Heart }
 ]
 
+/* MOCK DATA */
+const recentRecipes = [
+  { name: 'Spicy Chicken Ramen', likes: 120, views: 430 },
+  { name: 'Garlic Butter Shrimp', likes: 98, views: 301 },
+  { name: 'Chocolate Lava Cake', likes: 210, views: 880 }
+]
+
+const activityFeed = [
+  'You liked "Creamy Carbonara"',
+  'New comment on your recipe',
+  '3 users saved your recipe',
+  'Profile updated successfully'
+]
+
 /* LOGOUT */
 const logout = async () => {
-
   const res = await Swal.fire({
     title: 'Logout from Lutowl?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#ad49e1',
     cancelButtonColor: '#6c757d',
-    confirmButtonText: 'Yes, Logout',
-    cancelButtonText: 'Cancel',
+    confirmButtonText: 'Logout',
     reverseButtons: true
   })
 
@@ -93,171 +112,170 @@ onMounted(() => {
 <template>
   <div class="min-h-screen flex flex-col bg-surface-100 text-surface-900">
 
-    <!-- ================= TOP NAV (BLENDED, NO BORDER LINE) ================= -->
-    <header class="h-14 flex items-center justify-between px-4 md:px-6 bg-brand-900">
-
+    <!-- TOP BAR -->
+    <header class="h-14 flex items-center justify-between px-4 md:px-6 bg-brand-900 shadow-sm">
       <div class="flex items-center gap-3">
-        <button class="md:hidden text-white text-xl" @click="mobileMenuOpen = true">
-          ☰
-        </button>
-
+        <button class="md:hidden text-white text-xl" @click="mobileMenuOpen = true">☰</button>
         <img :src="navLogo" class="h-7" />
         <span class="font-bold text-white hidden sm:block">Lutowl</span>
       </div>
 
       <div class="flex items-center gap-3 relative">
+        <span class="text-white/70 text-sm hidden sm:block">{{ displayName }}</span>
 
-        <span class="text-white/70 text-sm hidden sm:block">
-          {{ displayName }}
-        </span>
-
-        <!-- PROFILE BUTTON -->
-        <button
-          id="profile-btn"
-          @click="showProfileMenu = !showProfileMenu"
-          class="flex items-center"
-        >
+        <button id="profile-btn" @click="showProfileMenu = !showProfileMenu">
           <img :src="avatar" class="h-9 w-9 rounded-full border border-white/20" />
         </button>
 
-        <!-- PROFILE POPUP -->
-        <div
-          v-if="showProfileMenu"
+        <!-- PROFILE MENU -->
+        <div v-if="showProfileMenu"
           id="profile-menu"
-          class="absolute top-12 right-0 w-52 bg-white text-surface-900 rounded-2xl shadow-[0_2px_12px_rgba(38,38,38,0.08)] overflow-hidden z-50 animate-fadeIn"
-        >
+          class="absolute top-12 right-0 w-52 bg-white rounded-2xl shadow-lg z-50 overflow-hidden">
 
-          <div class="px-4 py-3 border-b border-gray-200 bg-surface-50">
+          <div class="px-4 py-3 border-b">
             <p class="font-semibold text-brand-900">{{ displayName }}</p>
-            <p class="text-xs text-surface-900/60">{{ verified }}</p>
+            <p class="text-xs text-gray-500">{{ verified }}</p>
           </div>
 
-          <button class="w-full flex items-center gap-2 px-4 py-3 hover:bg-surface-200 text-surface-900">
-            <User :size="16" />
-            Profile
+          <button class="w-full flex items-center gap-2 px-4 py-3 hover:bg-gray-100">
+            <User size="16" /> Profile
           </button>
 
-          <button class="w-full flex items-center gap-2 px-4 py-3 hover:bg-surface-200 text-surface-900">
-            <Settings :size="16" />
-            Settings
+          <button class="w-full flex items-center gap-2 px-4 py-3 hover:bg-gray-100">
+            <Settings size="16" /> Settings
           </button>
 
-          <button
-            @click="logout"
-            class="w-full flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 font-semibold"
-          >
-            <LogOut :size="16" />
-            Logout
+          <button @click="logout"
+            class="w-full flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50">
+            <LogOut size="16" /> Logout
           </button>
-
         </div>
-
       </div>
-
     </header>
 
-    <!-- ================= BODY ================= -->
     <div class="flex flex-1 overflow-hidden">
 
-      <!-- ================= SIDEBAR (NO BORDER LINE, BLENDED) ================= -->
+      <!-- SIDEBAR -->
       <aside class="hidden md:flex w-64 flex-col bg-brand-900">
-
         <nav class="p-4 space-y-2">
-
           <button
             v-for="tab in tabs"
             :key="tab.id"
             @click="activeTab = tab.id"
-            class="w-full flex items-center gap-3 px-4 py-2 rounded-xl transition text-white/80 font-semibold"
-            :class="activeTab === tab.id ? 'bg-brand-700 text-white' : 'hover:bg-brand-700/40'"
+            class="w-full flex items-center gap-3 px-4 py-2 rounded-xl text-white/80 transition"
+            :class="activeTab === tab.id
+              ? 'bg-brand-700 text-white'
+              : 'hover:bg-brand-700/40'"
           >
             <component :is="tab.icon" :size="18" />
             {{ tab.label }}
           </button>
-
         </nav>
-
       </aside>
 
-      <!-- ================= MOBILE DRAWER ================= -->
-      <div
-        v-if="mobileMenuOpen"
-        class="fixed inset-0 bg-black/50 z-50 md:hidden"
-        @click="mobileMenuOpen = false"
-      >
-        <div class="w-64 h-full bg-brand-900 p-4" @click.stop>
+      <!-- MAIN -->
+      <main class="flex-1 p-4 md:p-8 space-y-8 overflow-y-auto">
 
-          <div class="flex items-center gap-3 mb-6">
-            <img :src="navLogo" class="h-8" />
-            <span class="font-bold text-white">Lutowl</span>
+        <!-- PAGE HEADER -->
+        <div>
+          <h1 class="text-3xl font-bold text-brand-900">
+            Welcome back, {{ displayName }}
+          </h1>
+          <p class="text-gray-600 mt-2 max-w-2xl">
+            Manage your recipes, track performance, and monitor engagement from your dashboard.
+          </p>
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between">
+              <Eye class="text-gray-500" />
+              <span class="text-xs text-green-600">+12%</span>
+            </div>
+            <p class="text-2xl font-bold mt-3">2.4K</p>
+            <p class="text-sm text-gray-500">Total Views</p>
           </div>
 
-          <nav class="space-y-2">
-            <button
-              v-for="tab in tabs"
-              :key="tab.id"
-              @click="activeTab = tab.id; mobileMenuOpen = false"
-              class="w-full flex items-center gap-3 px-4 py-2 rounded-xl text-white/80"
-              :class="activeTab === tab.id ? 'bg-brand-700 text-white' : 'hover:bg-brand-700/40'"
-            >
-              <component :is="tab.icon" :size="18" />
-              {{ tab.label }}
-            </button>
-          </nav>
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between">
+              <Heart class="text-red-500" />
+              <span class="text-xs text-red-500">+8%</span>
+            </div>
+            <p class="text-2xl font-bold mt-3">560</p>
+            <p class="text-sm text-gray-500">Likes</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between">
+              <BookOpen class="text-brand-700" />
+              <span class="text-xs text-brand-700">+3</span>
+            </div>
+            <p class="text-2xl font-bold mt-3">12</p>
+            <p class="text-sm text-gray-500">Recipes</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between">
+              <TrendingUp class="text-green-600" />
+              <span class="text-xs text-green-600">Active</span>
+            </div>
+            <p class="text-2xl font-bold mt-3">+18%</p>
+            <p class="text-sm text-gray-500">Growth</p>
+          </div>
 
         </div>
-      </div>
 
-      <!-- ================= MAIN ================= -->
-      <main class="flex-1 p-4 md:p-6 overflow-y-auto bg-surface-100 text-surface-900 rounded-tl-2xl">
+        <!-- CONTENT -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <div v-if="loading" class="text-center text-surface-900/60">
-          Loading dashboard...
-        </div>
+          <!-- RECENT RECIPES -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="font-semibold flex items-center gap-2 mb-5">
+              <ChefHat /> Recent Recipes
+            </h2>
 
-        <div v-else class="max-w-6xl mx-auto space-y-6">
-
-          <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-brand-900">
-            {{ activeTab.charAt(0).toUpperCase() + activeTab.slice(1) }}
-          </h1>
-
-          <div v-if="activeTab === 'overview'" class="grid md:grid-cols-3 gap-4">
-            <div class="bg-white p-6 rounded-2xl shadow-[0_2px_12px_rgba(38,38,38,0.08)] text-surface-900">
-              <span class="block text-lg font-semibold text-brand-700 mb-2">Welcome</span>
-              <span class="block text-xl font-bold">{{ displayName }}</span>
+            <div class="space-y-3">
+              <div
+                v-for="r in recentRecipes"
+                :key="r.name"
+                class="flex justify-between items-center py-3 border-b last:border-b-0"
+              >
+                <span class="text-sm font-medium">{{ r.name }}</span>
+                <span class="text-xs text-gray-500">
+                  {{ r.likes }} likes • {{ r.views }} views
+                </span>
+              </div>
             </div>
-            <div class="bg-white p-6 rounded-2xl shadow-[0_2px_12px_rgba(38,38,38,0.08)] text-surface-900">
-              <span class="block text-sm text-surface-900/70 mb-1">Email</span>
-              <span class="block font-semibold">{{ user?.email }}</span>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-[0_2px_12px_rgba(38,38,38,0.08)] text-surface-900">
-              <span class="block text-sm text-surface-900/70 mb-1">Status</span>
-              <span class="block font-semibold">{{ verified }}</span>
+          </div>
+
+          <!-- INSIGHTS (REPLACES ACTIVITY) -->
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="font-semibold flex items-center gap-2 mb-5">
+              <Star /> Insights
+            </h2>
+
+            <div class="space-y-3 text-sm text-gray-600">
+
+              <div class="p-4 border rounded-xl">
+                Top performing recipes are those with detailed steps and images.
+              </div>
+
+              <div class="p-4 border rounded-xl">
+                Engagement is higher during evening hours.
+              </div>
+
+              <div class="p-4 border rounded-xl">
+                Recipes with seasonal ingredients perform better.
+              </div>
+
             </div>
           </div>
 
         </div>
 
       </main>
-
     </div>
-
   </div>
 </template>
-
-<style scoped>
-.animate-fadeIn {
-  animation: fadeIn 0.15s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-</style>
