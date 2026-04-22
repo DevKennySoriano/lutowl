@@ -6,7 +6,7 @@
 
 ## Overview
 
-Lutowl is a modern recipe-sharing platform focused on Filipino cuisine. It helps users discover practical meal ideas quickly based on ingredients, budget, or simple meal prompts.
+Lutowl is a modern recipe-sharing platform focused on Filipino cuisine. It helps users discover practical meal ideas quickly based on ingredients, budget, or simple meal ideas.
 
 The project is built with Vue 3 and Vite, styled with Tailwind CSS for a clean and scalable UI workflow.
 
