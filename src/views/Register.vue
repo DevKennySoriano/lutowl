@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-surface-100 flex flex-col relative">
+  <div class="min-h-screen flex flex-col login-bg-pattern relative">
     <div v-if="loading" class="fixed inset-0 z-50 bg-white opacity-80 pointer-events-auto"></div>
     <div v-show="!loading">
       <Navigation />
@@ -321,4 +321,15 @@ const signUpWithGoogle = async () => {
   color: #dc2626;
   margin-top: 3px;
 }
+  .login-bg-pattern {
+    --s: 200px; /* control the size */
+    --c1: var(--color-brand-700, #7a1cac); /* purple */
+    --c2: #fff; /* white */
+    --c3: var(--color-brand-400, #816797); /* lighter purple */
+    background:
+      repeating-conic-gradient(from 30deg,#0000 0 120deg,var(--c3) 0 50%) 
+        calc(var(--s)/2) calc(var(--s)*0.2887),
+      repeating-conic-gradient(from 30deg,var(--c1) 0 60deg,var(--c2) 0 120deg,var(--c3) 0 50%);
+    background-size: var(--s) calc(var(--s)*0.5774);
+  }
 </style>
