@@ -322,10 +322,10 @@ const signUpWithGoogle = async () => {
   margin-top: 3px;
 }
   .login-bg-pattern {
-    --s: 200px; /* control the size */
-    --c1: var(--color-brand-700, #7a1cac); /* purple */
-    --c2: #fff; /* white */
-    --c3: var(--color-brand-400, #816797); /* lighter purple */
+    --s: 200px; 
+    --c1: var(--color-brand-700, #7a1cac); 
+    --c2: #fff; 
+    --c3: var(--color-brand-400, #816797); 
     background:
       repeating-conic-gradient(from 30deg,#0000 0 120deg,var(--c3) 0 50%) 
         calc(var(--s)/2) calc(var(--s)*0.2887),
