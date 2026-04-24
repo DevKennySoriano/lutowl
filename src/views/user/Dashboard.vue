@@ -173,14 +173,17 @@ onMounted(() => {
 
             <div class="flex items-end justify-between gap-6 relative z-10 pl-20 sm:pl-24 md:pl-32 lg:pl-36">
 
-              <div class="pb-2">
-                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900">
-                  Welcome back, {{ displayName }}
-                </h2>
-                <p class="text-xs sm:text-sm text-gray-500 mt-1">
-                  Here's what's happening with your recipes today.
-                </p>
-              </div>
+            <div class="pb-2 text-center md:text-left w-full md:w-auto">
+
+              <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 leading-snug">
+                Welcome back, {{ displayName }}
+              </h2>
+
+              <p class="text-xs sm:text-sm text-gray-500 mt-1">
+                Here's what's happening with your recipes today.
+              </p>
+
+            </div>
 
               <div class="flex items-center text-xs text-gray-500 pb-2">
                 <span
