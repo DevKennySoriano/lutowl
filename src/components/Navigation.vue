@@ -164,19 +164,29 @@ const logout = async () => {
 
   if (!result.isConfirmed) return
 
+
+  Swal.fire({
+    title: 'Signing out...',
+    text: 'Please wait',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showConfirmButton: false,
+    didOpen: () => {
+      Swal.showLoading()
+    }
+  })
+
+
   await supabase.auth.signOut()
 
   user.value = null
   menuOpen.value = false
 
-  await Swal.fire({
-    icon: 'success',
-    title: 'Logged out',
-    text: 'You have been signed out.',
-    confirmButtonColor: '#1f2937'
-  })
 
-  router.push('/login')
+  setTimeout(() => {
+    Swal.close()
+    router.push('/login')
+  }, 800)
 }
 </script>
 
