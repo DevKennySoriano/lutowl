@@ -141,29 +141,41 @@ const handleLogin = async () => {
   loading.value = false
 
   if (error) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Login failed',
-      text: error.message,
-      confirmButtonColor: '#1f2937'
-    })
+    const isBanned = error.message.toLowerCase().includes('banned')
+
+        if (isBanned) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Account Banned',
+          text: 'Your account has been suspended. Please contact support for assistance.',
+          confirmButtonColor: '#1f2937',
+          confirmButtonText: 'I Understand'
+        })
+      }else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Login failed',
+        text: error.message,
+        confirmButtonColor: '#1f2937'
+      })
+    }
     return
   }
 
-  await Swal.fire({
-  icon: 'success',
-  title: 'Login successful',
-  text: rememberMe.value
-    ? 'You will stay signed in on this device.'
-    : 'Welcome back to Lutowl',
-  allowOutsideClick: false,
-  allowEscapeKey: false,
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true
-})
+  Swal.fire({
+    icon: 'success',
+    title: 'Login successful',
+    text: rememberMe.value
+      ? 'You will stay signed in on this device.'
+      : 'Welcome back to Lutowl',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true
+  })
 
-router.push('/')
+  router.push('/')
 }
 
 /* GOOGLE LOGIN */
