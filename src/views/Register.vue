@@ -248,10 +248,7 @@ const handleSignup = async () => {
 
   const { data, error } = await supabase.auth.signUp({
     email: email.value,
-    password: password.value,
-    options: {
-      emailRedirectTo: 'none' // Prevent auto sign-in, only send confirmation email
-    }
+    password: password.value
   })
 
   if (error) {

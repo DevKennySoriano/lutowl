@@ -122,13 +122,14 @@ import Footer from '../components/Footer.vue'
 import { supabase } from '../lib/supabase'
 import Swal from 'sweetalert2'
 import { User, Mail, Lock } from 'lucide-vue-next'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const email = ref('')
 const password = ref('')
 const rememberMe = ref(false)
 const loading = ref(false)
 
-/* LOGIN */
 const handleLogin = async () => {
   loading.value = true
 
@@ -149,14 +150,20 @@ const handleLogin = async () => {
     return
   }
 
-  Swal.fire({
-    icon: 'success',
-    title: 'Login successful',
-    text: rememberMe.value
-      ? 'You will stay signed in on this device.'
-      : 'Welcome back to Lutowl',
-    confirmButtonColor: '#1f2937'
-  })
+  await Swal.fire({
+  icon: 'success',
+  title: 'Login successful',
+  text: rememberMe.value
+    ? 'You will stay signed in on this device.'
+    : 'Welcome back to Lutowl',
+  allowOutsideClick: false,
+  allowEscapeKey: false,
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+
+router.push('/')
 }
 
 /* GOOGLE LOGIN */
