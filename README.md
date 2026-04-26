@@ -26,6 +26,6 @@ In short, Lutowl turns your inputs into quick meal ideas. Instead of spending ti
 - Portfolio: https://devkennysoriano.vercel.app/
 - Email: devkennysoriano@gmail.com
 
-## Note
+## Notice
 
 	This project is currently in development.
